@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import ContactForm from './components/Contact/Сontact1';
-import SearchBox from './components/SearchBox/SearchBox1';
-import ContactList from './components/ContactList/СontactList1';
-import ErrorMessage from './components/ErrorMessage/ErrorMessage1';
+import ContactForm from './components/Contact/Сontact';
+import SearchBox from './components/SearchBox/SearchBox';
+import ContactList from './components/ContactList/СontactList';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from './redux/contactOps';
 import { selectError, selectIsLoading } from './redux/contactsSlice';
