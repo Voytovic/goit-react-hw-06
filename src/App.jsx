@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import ContactForm from './components/Contact/contact';
-import SearchBox from './components/SearchBox/searchBox';
-import ContactList from './components/ContactList/contactList';
-import ErrorMessage from './components/ErrorMessage/errorMessage';
+import ContactForm from './components/Contact/Сontact1';
+import SearchBox from './components/SearchBox/SearchBox1';
+import ContactList from './components/ContactList/СontactList1';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage1';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from './redux/contactOps';
 import { selectError, selectIsLoading } from './redux/contactsSlice';
@@ -27,7 +27,7 @@ export default function App() {
         </section>
         <section>
           <ContactList />
-          {isLoading && <b>Request in progress...</b>}
+          {isLoading && <b>Loading contacts......</b>}
           {error && <ErrorMessage />}
         </section>
       </div>
