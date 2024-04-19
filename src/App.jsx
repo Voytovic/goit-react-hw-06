@@ -1,36 +1,36 @@
-import './App.css';
-import { lazy, Suspense } from 'react';
-import Navigation from './components/navigation/navigation';
-import NotFoundPage from './pages/notFoundPage/NotFoundPage';
-import Loader from './components/loader/Loader';
-import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import ContactForm from './components/Contact/contact';
+import SearchBox from './components/SearchBox/searchBox';
+import ContactList from './components/ContactList/contactList';
+import ErrorMessage from './components/ErrorMessage/errorMessage';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from './redux/contactOps';
+import { selectError, selectIsLoading } from './redux/contactsSlice';
 
-const HomePage = lazy(() => import('./pages/homePage/HomePage'));
-const MoviePage = lazy(() => import('./pages/moviePage/MoviePage'));
-const MovieDetailsPage = lazy(() =>
-  import('./pages/movieDetailsPage/MovieDetailsPage')
-);
-const MovieCast = lazy(() => import('./components/movieCast/MovieCast'));
-const MovieReviews = lazy(() =>
-  import('./components/movieReviews/MovieReviews')
-);
+export default function App() {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
-function App() {
   return (
-    <>
-      <Navigation />
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/movies" element={<MoviePage />} />
-          <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
-            <Route path="cast" element={<MovieCast />} />
-            <Route path="reviews" element={<MovieReviews />} />
-          </Route>
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </>
+    <div>
+      <div>
+        <h1>PhoneBook</h1>
+        <section>
+          <ContactForm />
+        </section>
+        <section>
+          <SearchBox />
+        </section>
+        <section>
+          <ContactList />
+          {isLoading && <b>Request in progress...</b>}
+          {error && <ErrorMessage />}
+        </section>
+      </div>
+    </div>
   );
 }
-export default App;
