@@ -5,8 +5,6 @@ import { deleteContact } from '../../redux/contactOps';
 import css from './contact.module.css';
 
 const Contact = ({ data: { name, number, id } }) => {
-  console.log('Received data:', { name, number, id });
-
   const dispatch = useDispatch();
 
   return (
