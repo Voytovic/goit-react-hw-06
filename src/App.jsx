@@ -1,36 +1,18 @@
-import { useEffect } from 'react';
-import ContactForm from './components/Contact/Сontact';
-import SearchBox from './components/SearchBox/SearchBox';
 import ContactList from './components/ContactList/СontactList';
-import ErrorMessage from './components/ErrorMessage/ErrorMessage';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from './redux/contactOps';
-import { selectError, selectIsLoading } from './redux/contactsSlice';
+import SearchBox from './components/SearchBox/SearchBox';
+import ContactForm from './components/ContactsForm/СontactsForm';
 
-export default function App() {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
+function App() {
   return (
-    <div>
-      <div>
-        <h1>PhoneBook</h1>
-        <section>
-          <ContactForm />
-        </section>
-        <section>
-          <SearchBox />
-        </section>
-        <section>
-          <ContactList />
-          {isLoading && <b>Loading contacts......</b>}
-          {error && <ErrorMessage />}
-        </section>
+    <>
+      <div className="container">
+        <h1 className="title">Phonebook</h1>
+        <ContactForm />
+        <SearchBox />
+        <ContactList />
       </div>
-    </div>
+    </>
   );
 }
+
+export default App;

@@ -1,74 +1,60 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as yup from 'yup';
-import { nanoid } from 'nanoid';
-import css from './ContactForm.module.css';
+import { addContact } from '../../redux/contactsSlice';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsOps';
+import * as Yup from 'yup';
+import css from './ContactsForm.module.css';
 
-const initualValues = {
-  name: '',
-  number: '',
-};
-const nameReg = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
-const numberReg =
-  /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
+const initialValues = { name: '', tel: '' };
 
-const FeedbackSchema = yup.object().shape({
-  name: yup
-    .string()
+const FeedbackSchema = Yup.object().shape({
+  name: Yup.string()
     .min(3, 'Too Short!')
-    .max(50, 'Too Long')
-    .required('Required')
-    .matches(
-      nameReg,
-      'Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer'
-    ),
-  number: yup
-    .string()
+    .max(50, 'Too Long!')
+    .required('Required'),
+  tel: Yup.string()
     .min(3, 'Too Short!')
-    .max(50, 'Too Long')
-    .required('Required')
-    .matches(numberReg, 'Mobile phone number must have 8 digits'),
+    .max(50, 'Too Long!')
+    .required('Required'),
 });
 
-const nameFieldId = nanoid();
-const numberFieldId = nanoid();
-
-const ContactForm = () => {
+export default function ContactForm() {
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, actions) => {
-    const contact = {
-      name: values.name,
-      number: values.number,
-    };
-    dispatch(addContact(contact));
-    actions.resetForm();
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(addContact(values.name, values.tel));
+    resetForm();
   };
 
   return (
-    <Formik
-      initialValues={initualValues}
-      onSubmit={handleSubmit}
-      validationSchema={FeedbackSchema}
-    >
-      <Form className={css.form}>
-        <label className={css.label} htmlFor={nameFieldId}>
-          Name
-          <Field name="name" type="text" id={nameFieldId} />
-          <ErrorMessage name="name" component="span" className={css.error} />
-        </label>
-        <label className={css.label} htmlFor={numberFieldId}>
-          Number
-          <Field name="number" type="text" id={numberFieldId} />
-          <ErrorMessage name="number" component="span" className={css.error} />
-        </label>
+    <div>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={FeedbackSchema}
+      >
+        <Form className={css['form']}>
+          <div className={css['form-container']}>
+            <div className={css['input-container']}>
+              <label htmlFor="nameId" className={css['form-label']}>
+                Name
+              </label>
+              <Field name="name" type="text" className={css['input-form']} />
+              <ErrorMessage name="name" as="span" />
+            </div>
 
-        <button className={css.addBtn} type="submit">
-          Add contact
-        </button>
-      </Form>
-    </Formik>
+            <div className={css['input-container']}>
+              <label htmlFor="telId" className={css['form-label']}>
+                Number
+              </label>
+              <Field name="tel" type="tel" className={css['input-form']} />
+              <ErrorMessage name="tel" as="span" />
+            </div>
+          </div>
+          <button type="submit" className={css['button-form']}>
+            Add contact
+          </button>
+        </Form>
+      </Formik>
+    </div>
   );
-};
-export default ContactForm;
+}
