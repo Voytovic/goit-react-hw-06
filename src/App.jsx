@@ -1,5 +1,5 @@
 import ContactList from './components/ContactList/ContactList';
-import SearchBox from './components/SearchBox/SSearchBox';
+import SearchBox from './components/SearchBox/searchBox';
 import ContactForm from './components/ContactForm/ContactForm';
 
 function App() {
