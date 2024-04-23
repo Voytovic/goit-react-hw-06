@@ -1,6 +1,6 @@
-import ContactList from './components/ContactList/kontactList';
+import ContactList from './components/ContactList/ContactList';
 import SearchBox from './components/SearchBox/SearchBox';
-import ContactForm from './components/ContactsForm/kontactsForm';
+import ContactForm from './components/ContactsForm/ContactsForm';
 
 function App() {
   return (
